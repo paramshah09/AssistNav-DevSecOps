@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AssistNav - Assistive Navigation System (Prototype)</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <!-- ===== Header ===== -->
+  <header class="app-header">
+    <div class="header-text">
+      <h1>AssistNav</h1>
+      <p>Helps users find accessibility-friendly routes on a campus. <strong>Prototype with simulated data.</strong></p>
+    </div>
+    <div class="header-actions">
+      <button type="button" id="contrastBtn" class="btn btn-secondary" aria-pressed="false">High Contrast: Off</button>
+      <button type="button" id="emergencyBtn" class="btn btn-danger">Emergency / Help</button>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- Status messages (screen-reader friendly) -->
+    <div id="statusBox" class="status" role="status" aria-live="polite">Welcome. Choose a start, a destination and an accessibility preference.</div>
+
+    <!-- ===== 1. Home / Search ===== -->
+    <section class="card" aria-labelledby="searchHeading">
+      <h2 id="searchHeading">1. Plan your route</h2>
+      <div class="form-grid">
+        <div class="field">
+          <label for="startSelect">Starting location</label>
+          <select id="startSelect"></select>
+          <span class="error-text" id="startError"></span>
+        </div>
+        <div class="field">
+          <label for="destSelect">Destination</label>
+          <select id="destSelect"></select>
+          <span class="error-text" id="destError"></span>
+        </div>
+      </div>
+
+      <fieldset class="field" id="prefGroup">
+        <legend>Accessibility preference</legend>
+        <div id="prefOptions" class="pref-options"></div>
+        <span class="error-text" id="prefError"></span>
+      </fieldset>
+
+      <button type="button" id="findBtn" class="btn btn-primary">Find Accessible Route</button>
+    </section>
+
+    <!-- ===== 2. Route options ===== -->
+    <section class="card" id="routesSection" aria-labelledby="routesHeading" hidden>
+      <h2 id="routesHeading" tabindex="-1">2. Route options</h2>
+      <p class="muted">Simulated demonstration routes, ranked for your preference.</p>
+      <div id="routesList" class="routes-grid"></div>
+    </section>
+
+    <!-- ===== 3. Alerts ===== -->
+    <section class="card" id="alertsSection" aria-labelledby="alertsHeading" hidden>
+      <h2 id="alertsHeading">3. Accessibility alerts</h2>
+      <ul id="alertsList" class="alerts"></ul>
+    </section>
+
+    <!-- ===== 4. Step-by-step navigation ===== -->
+    <section class="card" id="navSection" aria-labelledby="navHeading" hidden>
+      <h2 id="navHeading" tabindex="-1">4. Step-by-step navigation</h2>
+      <p id="navSubtitle" class="muted"></p>
+      <div id="stepBanner" class="step-banner" aria-live="polite"></div>
+      <ol id="stepsList" class="steps"></ol>
+      <div class="nav-buttons">
+        <button type="button" id="prevBtn" class="btn btn-secondary">Previous step</button>
+        <button type="button" id="nextBtn" class="btn btn-primary">Next step</button>
+        <button type="button" id="restartBtn" class="btn btn-secondary">Restart</button>
+      </div>
+    </section>
+
+    <!-- ===== 5. System status / testing ===== -->
+    <section class="card" aria-labelledby="testHeading">
+      <h2 id="testHeading">System status / testing</h2>
+      <p class="muted">Runs simple automated checks against the same classes used by the app.</p>
+      <button type="button" id="testBtn" class="btn btn-secondary">Run Self-Tests</button>
+      <div class="table-wrap">
+        <table class="test-table" id="testTable" hidden>
+          <thead><tr><th scope="col">Test case</th><th scope="col">Result</th><th scope="col">Detail</th></tr></thead>
+          <tbody id="testResults"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    AssistNav is a college micro-project prototype (Software Engineering Practices). All locations and routes are simulated. No GPS, maps or emergency calling is used.
+  </footer>
+
+  <!-- ===== Emergency dialog ===== -->
+  <dialog id="emergencyDialog" aria-labelledby="emTitle">
+    <h2 id="emTitle">Emergency / Help</h2>
+    <p id="emMessage"></p>
+    <p><strong>Campus Security:</strong> <span id="emContact"></span></p>
+    <p class="muted" id="emNote"></p>
+    <button type="button" id="closeEmergency" class="btn btn-primary">Close</button>
+  </dialog>
+
+  <script src="script.js"></script>
+</body>
+</html>

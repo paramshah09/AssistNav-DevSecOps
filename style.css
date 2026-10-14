@@ -1,0 +1,147 @@
+/* AssistNav styles - high contrast, large targets, responsive. */
+:root {
+  --bg: #f3f6fb;
+  --card: #ffffff;
+  --text: #14213d;
+  --muted: #4a5568;
+  --primary: #0b3d91;
+  --primary-text: #ffffff;
+  --border: #9aa8c2;
+  --danger: #b00020;
+  --ok: #0a6b2d;
+  --warn-bg: #fff4d6;
+  --warn-border: #8a5a00;
+  --info-bg: #e3f1ff;
+  --info-border: #0b3d91;
+  --focus: #ff9800;
+}
+body.high-contrast {
+  --bg: #000000;
+  --card: #000000;
+  --text: #ffffff;
+  --muted: #f0f0f0;
+  --primary: #ffeb3b;
+  --primary-text: #000000;
+  --border: #ffffff;
+  --danger: #ff6b6b;
+  --ok: #7CFC00;
+  --warn-bg: #000000;
+  --warn-border: #ffeb3b;
+  --info-bg: #000000;
+  --info-border: #00e5ff;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1.125rem;       /* 18px readable base */
+  line-height: 1.5;
+  background: var(--bg);
+  color: var(--text);
+}
+h1, h2 { margin: 0 0 .5rem; }
+h1 { font-size: 2rem; }
+h2 { font-size: 1.4rem; }
+.muted { color: var(--muted); margin-top: 0; }
+
+.skip-link { position: absolute; left: -999px; top: 0; background: #fff; color: #000; padding: .75rem; z-index: 10; }
+.skip-link:focus { left: 0; }
+
+.app-header {
+  background: var(--primary);
+  color: var(--primary-text);
+  padding: 1rem 1.25rem;
+  display: flex; flex-wrap: wrap; gap: 1rem;
+  align-items: center; justify-content: space-between;
+  border-bottom: 3px solid var(--border);
+}
+.app-header p { margin: 0; }
+.header-actions { display: flex; flex-wrap: wrap; gap: .75rem; }
+
+main { max-width: 960px; margin: 0 auto; padding: 1rem; }
+.card {
+  background: var(--card);
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.field { margin: 0 0 1rem; padding: 0; border: 0; }
+label, legend { display: block; font-weight: bold; margin-bottom: .35rem; padding: 0; }
+select {
+  width: 100%; min-height: 48px; font-size: 1.1rem; padding: .5rem;
+  background: var(--card); color: var(--text); border: 2px solid var(--border); border-radius: 8px;
+}
+select[aria-invalid="true"] { border-color: var(--danger); border-width: 3px; }
+.error-text { display: block; color: var(--danger); font-weight: bold; min-height: 1.2em; }
+
+.pref-options { display: grid; grid-template-columns: repeat(2, 1fr); gap: .75rem; }
+.pref-option {
+  display: flex; gap: .6rem; align-items: flex-start;
+  border: 2px solid var(--border); border-radius: 8px; padding: .75rem; cursor: pointer;
+}
+.pref-option input { width: 24px; height: 24px; margin-top: .2rem; flex: none; }
+.pref-option small { display: block; color: var(--muted); font-weight: normal; }
+.pref-option:has(input:checked) { border-color: var(--primary); background: var(--info-bg); outline: 2px solid var(--primary); }
+
+.btn {
+  min-height: 48px; padding: .6rem 1.2rem; font-size: 1.1rem; font-weight: bold;
+  border-radius: 8px; border: 2px solid var(--border); cursor: pointer;
+  background: var(--card); color: var(--text);
+}
+.btn-primary { background: var(--primary); color: var(--primary-text); border-color: var(--primary); }
+.btn-secondary { background: var(--card); color: var(--text); }
+.btn-danger { background: var(--danger); color: #fff; border-color: #fff; }
+body.high-contrast .btn-danger { color: #000; background: #ff6b6b; }
+.btn:disabled { opacity: .5; cursor: not-allowed; }
+:focus-visible { outline: 4px solid var(--focus); outline-offset: 2px; }
+
+.status { max-width: 928px; margin: 0 auto 1rem; padding: .85rem 1rem; border-radius: 8px; border: 2px solid var(--info-border); background: var(--info-bg); font-weight: bold; }
+.status.success { border-color: var(--ok); }
+.status.error { border-color: var(--danger); color: var(--danger); }
+main > .status { max-width: none; }
+
+.routes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+.route-card { border: 2px solid var(--border); border-radius: 10px; padding: 1rem; display: flex; flex-direction: column; gap: .4rem; }
+.route-card.selected { border-color: var(--primary); outline: 3px solid var(--primary); }
+.route-card h3 { margin: 0; font-size: 1.2rem; }
+.badge { display: inline-block; font-size: .85rem; font-weight: bold; padding: .1rem .5rem; border-radius: 99px; border: 2px solid var(--ok); color: var(--ok); width: fit-content; }
+.badge.bad { border-color: var(--danger); color: var(--danger); }
+.route-card dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: .1rem .6rem; }
+.route-card dt { font-weight: bold; }
+.route-card dd { margin: 0; }
+.route-card ul { margin: 0; padding-left: 1.2rem; }
+.route-card .btn { margin-top: auto; }
+.reason { color: var(--danger); font-weight: bold; margin: 0; }
+
+.alerts { list-style: none; margin: 0; padding: 0; display: grid; gap: .6rem; }
+.alerts li { padding: .7rem .9rem; border-radius: 8px; border-left: 8px solid; font-weight: bold; }
+.alerts li.info { background: var(--info-bg); border-color: var(--info-border); }
+.alerts li.warning { background: var(--warn-bg); border-color: var(--warn-border); }
+
+.step-banner { font-size: 1.5rem; font-weight: bold; padding: 1rem; border: 3px solid var(--primary); border-radius: 10px; margin-bottom: 1rem; }
+.steps { padding-left: 1.5rem; }
+.steps li { padding: .35rem .5rem; border-radius: 6px; }
+.steps li.done { color: var(--muted); text-decoration: line-through; }
+.steps li.current { background: var(--primary); color: var(--primary-text); font-weight: bold; }
+.nav-buttons { display: flex; flex-wrap: wrap; gap: .75rem; }
+
+.table-wrap { overflow-x: auto; margin-top: 1rem; }
+.test-table { width: 100%; border-collapse: collapse; }
+.test-table th, .test-table td { border: 2px solid var(--border); padding: .5rem; text-align: left; }
+.pass { color: var(--ok); font-weight: bold; }
+.fail { color: var(--danger); font-weight: bold; }
+.manual { font-weight: bold; }
+
+.app-footer { text-align: center; color: var(--muted); padding: 1rem; font-size: .95rem; }
+
+dialog { max-width: 520px; width: calc(100% - 2rem); background: var(--card); color: var(--text); border: 4px solid var(--danger); border-radius: 12px; padding: 1.5rem; }
+dialog::backdrop { background: rgba(0,0,0,.7); }
+
+@media (max-width: 800px) {
+  .form-grid, .pref-options, .routes-grid { grid-template-columns: 1fr; }
+  h1 { font-size: 1.6rem; }
+}
