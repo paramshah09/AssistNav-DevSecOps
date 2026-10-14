@@ -21,7 +21,7 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                bat 'docker build -t assistnav:1.0 .'
+                bat '"C:\\Users\\param\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\docker.exe" build -t assistnav:1.0 .'
             }
         }
     }
