@@ -19,16 +19,29 @@ pipeline {
             }
         }
 
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('SonarQube-Local') {
+                    withCredentials([
+                        string(credentialsId: 'sonarqube-token',
+                               variable: 'SONAR_TOKEN')
+                    ]) {
+                        bat 'C:\\SonarScanner\\bin\\sonar-scanner.bat -Dsonar.host.url=http://localhost:9000 -Dsonar.token=%SONAR_TOKEN%'
+                    }
+                }
+            }
+        }
+
         stage('Build Docker Image') {
             steps {
-                bat '"C:\\Users\\param\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\docker.exe" build -t assistnav:1.0 .'
+                bat '"C:\\Users\\param\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\docker.exe" build -t assistnav:1.1 .'
             }
         }
     }
 
     post {
         success {
-            echo 'AssistNav validation and Docker build succeeded.'
+            echo 'AssistNav validation, SonarQube analysis, and Docker build succeeded.'
         }
         failure {
             echo 'Pipeline failed. Check the stage logs.'
