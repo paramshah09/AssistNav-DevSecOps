@@ -1,4 +1,20 @@
+
+# Existing security scanner exclusions
 .scannerwork/
 baseline-report*
 full-report*
 zap.yaml
+
+# Terraform local files and state
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+crash.log
+crash.*.log
+*.tfplan
+
+# Local credentials and variable files
+*.tfvars
+*.tfvars.json
+.terraformrc
+terraform.rc
