@@ -59,11 +59,39 @@ pipeline {
                 }
             }
         }
+
+        stage('Deploy to AWS S3') {
+            steps {
+                withCredentials([
+                    string(
+                        credentialsId: 'aws-access-key-id',
+                        variable: 'AWS_ACCESS_KEY_ID'
+                    ),
+                    string(
+                        credentialsId: 'aws-secret-access-key',
+                        variable: 'AWS_SECRET_ACCESS_KEY'
+                    )
+                ]) {
+                    bat '''
+                        set AWS_DEFAULT_REGION=ap-southeast-2
+                        "C:\\Users\\param\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe" s3 cp index.html s3://assistnav-devsecops-221eef3438a1ea8b10d14c4bf2/index.html --content-type "text/html"
+                        if errorlevel 1 exit /b 1
+
+                        "C:\\Users\\param\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe" s3 cp style.css s3://assistnav-devsecops-221eef3438a1ea8b10d14c4bf2/style.css --content-type "text/css"
+                        if errorlevel 1 exit /b 1
+
+                        "C:\\Users\\param\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe" s3 cp script.js s3://assistnav-devsecops-221eef3438a1ea8b10d14c4bf2/script.js --content-type "application/javascript"
+                        if errorlevel 1 exit /b 1
+                    '''
+                }
+                echo 'AssistNav website files deployed to AWS S3.'
+            }
+        }
     }
 
     post {
         success {
-            echo 'AssistNav validation, SonarQube analysis, Docker build, and AWS authentication succeeded.'
+            echo 'AssistNav validation, SonarQube analysis, Docker build, AWS authentication, and S3 deployment succeeded.'
         }
         failure {
             echo 'Pipeline failed. Check the stage logs.'
